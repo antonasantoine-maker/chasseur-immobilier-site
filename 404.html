@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page non trouvée - Mon Chasseur de Pierre Chasseur Immobilier</title>
+    <meta name="description" content="La page que vous recherchez n'existe pas. Retournez à l'accueil de Mon Chasseur de Pierre, votre chasseur immobilier premium.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .error-404 {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+            padding: 2rem 0;
+        }
+        
+        .error-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 3rem 2rem;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .error-number {
+            font-size: 8rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 1rem;
+            font-family: var(--font-heading);
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            font-family: var(--font-heading);
+        }
+        
+        .error-description {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--gold);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .btn-home:hover {
+            background: #B8941F;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .btn-contact {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--dark-blue);
+            text-decoration: none;
+            border: 2px solid var(--dark-blue);
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .btn-contact:hover {
+            background: var(--dark-blue);
+            color: var(--white);
+        }
+        
+        @media (max-width: 768px) {
+            .error-number {
+                font-size: 6rem;
+            }
+            
+            .error-title {
+                font-size: 2rem;
+            }
+            
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-home,
+            .btn-contact {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation simplifiée -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">Mon Chasseur de Pierre</span>
+                <span class="logo-subtitle">Chasseur Immobilier</span>
+            </div>
+            <div class="nav-cta">
+                <a href="index.html" class="btn-primary">Retour à l'accueil</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section 404 -->
+    <section class="error-404">
+        <div class="error-content">
+            <div class="error-number">404</div>
+            <h1 class="error-title">Page non trouvée</h1>
+            <p class="error-description">
+                Oops ! La page que vous recherchez semble avoir déménagé.<br>
+                Comme un bien immobilier, elle a peut-être trouvé un meilleur emplacement !
+            </p>
+            <div class="error-actions">
+                <a href="index.html" class="btn-home">
+                    🏠 Retour à l'accueil
+                </a>
+                <a href="index.html#contact" class="btn-contact">
+                    📞 Nous contacter
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Redirection automatique après 10 secondes
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 10000);
+    </script>
+</body>
+</html>

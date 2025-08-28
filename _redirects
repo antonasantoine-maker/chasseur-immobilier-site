@@ -1,0 +1,10 @@
+# Redirections SEO
+/mentions /mentions-legales.html 301
+/confidentialite /politique-confidentialite.html 301
+/cgv /cgv.html 301
+/contact /#contact 301
+/services /#services 301
+/projets /#projets 301
+
+# Page 404 pour toutes les autres pages
+/* /404.html 404
