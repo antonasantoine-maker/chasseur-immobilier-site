@@ -1,10 +1,12 @@
-# Redirections SEO
+# Redirections SEO optimisées (consolidées)
 /mentions /mentions-legales.html 301
 /confidentialite /politique-confidentialite.html 301
 /cgv /cgv.html 301
-/contact /#contact 301
-/services /#services 301
-/projets /#projets 301
+
+# Redirections vers sections (éviter les redirections multiples)
+/contact /index.html#contact 301
+/services /index.html#services 301
+/projets /index.html#projets 301
 
 # Page 404 pour toutes les autres pages
 /* /404.html 404

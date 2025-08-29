@@ -10,6 +10,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Cache-Control = "public, max-age=300, must-revalidate"
 
 [[headers]]
   for = "*.css"
@@ -19,7 +20,7 @@
 [[headers]]
   for = "*.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=300, must-revalidate"
 
 [[headers]]
   for = "*.jpg"
@@ -51,21 +52,8 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-[[redirects]]
-  from = "/mentions"
-  to = "/mentions-legales.html"
-  status = 301
-
-[[redirects]]
-  from = "/confidentialite"
-  to = "/politique-confidentialite.html"
-  status = 301
-
-[[redirects]]
-  from = "/cgv"
-  to = "/cgv.html"
-  status = 301
-
+# Redirections gérées par _redirects pour éviter les doublons
+# Seule la règle 404 est conservée ici comme fallback
 [[redirects]]
   from = "/*"
   to = "/404.html"

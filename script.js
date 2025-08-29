@@ -9,171 +9,87 @@ const CONFIG = {
 
 // Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
-    initializeAnimations();
+    initializeScrollAnimations(); // Fonction unifiée pour toutes les animations au scroll
     initializeScrollEffects();
     initializeFormHandling();
     initializeCTAOptimization();
     initializeNavigation();
     initializeCounters();
-    initializeProjectsCarousel();
+    initializeMobileMenu();
+    
+    // Le sticky CTA s'affiche automatiquement via l'intersection observer
 });
 
-// === CARROUSEL DE PROJETS ===
-
-function initializeProjectsCarousel() {
-    const carousel = document.querySelector('.projects-carousel');
-    if (!carousel) return;
+/**
+ * Initialise le menu mobile avec gestion des interactions
+ * Gère l'ouverture/fermeture, les événements clavier et le responsive
+ */
+function initializeMobileMenu() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navOverlay = document.querySelector('.nav-overlay');
+    const navLinks = document.querySelectorAll('.nav-link');
     
-    const track = carousel.querySelector('.carousel-track');
-    const slides = carousel.querySelectorAll('.carousel-slide');
-    const prevBtn = carousel.querySelector('.prev-btn');
-    const nextBtn = carousel.querySelector('.next-btn');
-    const indicators = carousel.querySelectorAll('.indicator');
+    if (!navToggle || !navMenu || !navOverlay) return;
     
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-    
-    // Fonction pour afficher une slide
-    function showSlide(index) {
-        // Masquer toutes les slides
-        slides.forEach(slide => {
-            slide.classList.remove('active');
-        });
+    // Fonction pour ouvrir/fermer le menu
+    function toggleMenu() {
+        const isActive = navMenu.classList.contains('active');
         
-        // Afficher la slide active
-        if (slides[index]) {
-            slides[index].classList.add('active');
+        if (isActive) {
+            closeMenu();
+        } else {
+            openMenu();
         }
-        
-        // Déplacer le track
-        track.style.transform = `translateX(-${index * 33.333}%)`;
-        
-        // Mettre à jour les indicateurs
-        indicators.forEach((indicator, i) => {
-            indicator.classList.toggle('active', i === index);
-        });
-        
-        // Mettre à jour les boutons
-        prevBtn.disabled = index === 0;
-        nextBtn.disabled = index === totalSlides - 1;
-        
-        currentSlide = index;
     }
     
-    // Navigation précédent
-    prevBtn.addEventListener('click', () => {
-        if (currentSlide > 0) {
-            showSlide(currentSlide - 1);
-        }
-    });
-    
-    // Navigation suivant
-    nextBtn.addEventListener('click', () => {
-        if (currentSlide < totalSlides - 1) {
-            showSlide(currentSlide + 1);
-        }
-    });
-    
-    // Navigation par indicateurs
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            showSlide(index);
-        });
-    });
-    
-    // Navigation au clavier
-    carousel.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' && currentSlide > 0) {
-            showSlide(currentSlide - 1);
-        } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
-            showSlide(currentSlide + 1);
-        }
-    });
-    
-    // Auto-play (optionnel)
-    let autoPlayInterval;
-    let autoPlayTimeout;
-    
-    function startAutoPlay() {
-        // Nettoyer les intervalles existants pour éviter les conflits
-        clearInterval(autoPlayInterval);
-        clearTimeout(autoPlayTimeout);
-        
-        autoPlayInterval = setInterval(() => {
-            const nextIndex = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1;
-            showSlide(nextIndex);
-        }, 5000); // Change toutes les 5 secondes (plus lent)
+    // Fonction pour ouvrir le menu
+    function openMenu() {
+        navToggle.classList.add('active');
+        navMenu.classList.add('active');
+        navOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
     
-    function stopAutoPlay() {
-        clearInterval(autoPlayInterval);
-        clearTimeout(autoPlayTimeout);
+    // Fonction pour fermer le menu
+    function closeMenu() {
+        navToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
     }
     
-    function restartAutoPlayAfterDelay() {
-        stopAutoPlay();
-        autoPlayTimeout = setTimeout(() => {
-            startAutoPlay();
-        }, 8000); // Redémarrer après 8 secondes d'inactivité
-    }
+    // Event listeners
+    navToggle.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', closeMenu);
     
-    // Démarrer l'auto-play
-    startAutoPlay();
-    
-    // Arrêter l'auto-play au survol
-    carousel.addEventListener('mouseenter', stopAutoPlay);
-    carousel.addEventListener('mouseleave', restartAutoPlayAfterDelay);
-    
-    // Arrêter l'auto-play si l'utilisateur interagit
-    [prevBtn, nextBtn, ...indicators].forEach(element => {
-        element.addEventListener('click', restartAutoPlayAfterDelay);
+    // Fermer le menu quand on clique sur un lien
+    navLinks.forEach(link => {
+        link.addEventListener('click', closeMenu);
     });
     
-    // Support tactile pour mobile
-    let startX = 0;
-    let currentX = 0;
-    let isDragging = false;
-    
-    carousel.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-        stopAutoPlay();
-    });
-    
-    carousel.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        currentX = e.touches[0].clientX;
-    });
-    
-    carousel.addEventListener('touchend', () => {
-        if (!isDragging) return;
-        
-        const diffX = startX - currentX;
-        const threshold = 50; // Seuil minimum pour déclencher le changement
-        
-        if (Math.abs(diffX) > threshold) {
-            if (diffX > 0 && currentSlide < totalSlides - 1) {
-                // Swipe vers la gauche - slide suivante
-                showSlide(currentSlide + 1);
-            } else if (diffX < 0 && currentSlide > 0) {
-                // Swipe vers la droite - slide précédente
-                showSlide(currentSlide - 1);
-            }
+    // Fermer le menu avec la touche Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            closeMenu();
         }
-        
-        isDragging = false;
-        restartAutoPlayAfterDelay();
     });
     
-    // Initialiser la première slide
-    showSlide(0);
+    // Fermer le menu lors du redimensionnement de la fenêtre
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
+            closeMenu();
+        }
+    });
 }
 
-// === ANIMATIONS ET EFFETS VISUELS ===
+// === GRILLE DE PROJETS ===
 
-// Initialisation des animations
-function initializeAnimations() {
-    // Observer pour les animations au scroll
+/**
+ * Fonction unifiée d'observation des éléments pour les animations au scroll
+ * Gère différents types d'animations selon les classes CSS des éléments
+ */
+function initializeScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -182,13 +98,22 @@ function initializeAnimations() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
+                const element = entry.target;
                 
-                // Animation spéciale pour les cartes
-                if (entry.target.classList.contains('feature-card') || 
-                    entry.target.classList.contains('step') || 
-                    entry.target.classList.contains('testimonial-card')) {
-                    animateCard(entry.target);
+                // Animation pour les cartes de projets avec délai CSS
+                if (element.classList.contains('project-card')) {
+                    element.classList.add('animate-in');
+                }
+                // Animation standard pour les autres éléments
+                else {
+                    element.classList.add('animate');
+                    
+                    // Animation spéciale pour certains types de cartes
+                    if (element.classList.contains('feature-card') || 
+                        element.classList.contains('step') || 
+                        element.classList.contains('testimonial-card')) {
+                        animateCard(element);
+                    }
                 }
             }
         });
@@ -196,7 +121,7 @@ function initializeAnimations() {
 
     // Observer tous les éléments animables
     const animatableElements = document.querySelectorAll(
-        '.feature-card, .step, .testimonial-card, .section-header'
+        '.project-card, .feature-card, .step, .testimonial-card, .section-header'
     );
     
     animatableElements.forEach(el => {
@@ -204,54 +129,89 @@ function initializeAnimations() {
     });
 }
 
-// Animation des cartes
+// Alias pour la compatibilité
+function initializeProjectsGrid() {
+    // Fonction déplacée vers initializeScrollAnimations
+}
+
+function initializeAnimations() {
+    // Fonction déplacée vers initializeScrollAnimations
+}
+
+/**
+ * Anime une carte avec des effets de transition optimisés
+ * @param {HTMLElement} card - L'élément carte à animer
+ */
 function animateCard(card) {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    
-    setTimeout(() => {
-        card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-    }, Math.random() * 200); // Délai aléatoire pour effet cascade
+    // Utiliser requestAnimationFrame pour éviter les forced reflows
+    requestAnimationFrame(() => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        
+        setTimeout(() => {
+            requestAnimationFrame(() => {
+                card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            });
+        }, Math.random() * 200);
+    });
 }
 
 // === EFFETS DE SCROLL ===
 
-// Initialisation des effets de scroll
+// Initialisation des effets de scroll optimisés
+/**
+ * Initialise les effets de scroll pour la navigation et le CTA sticky
+ * Gère l'affichage/masquage des éléments selon la position de scroll
+ */
 function initializeScrollEffects() {
-    // Navbar au scroll
+    const navbar = document.querySelector('.navbar');
+    const hero = document.querySelector('.hero');
     let lastScrollY = window.scrollY;
+    let ticking = false;
     
-    window.addEventListener('scroll', () => {
-        const navbar = document.querySelector('.navbar');
+    function updateScrollEffects() {
         const currentScrollY = window.scrollY;
         
-        if (currentScrollY > 100) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-            navbar.style.boxShadow = '0 4px 20px rgba(13, 27, 42, 0.1)';
-        } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-            navbar.style.boxShadow = 'none';
+        // Optimisation navbar - éviter les reflows
+        if (navbar) {
+            if (currentScrollY > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 4px 20px rgba(13, 27, 42, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+        }
+        
+        // Parallax optimisé pour le hero
+        if (hero) {
+            const rate = currentScrollY * -0.5;
+            hero.style.transform = `translateY(${rate}px)`;
         }
         
         lastScrollY = currentScrollY;
-    });
-    
-    // Parallax léger pour le hero
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            hero.style.transform = `translateY(${rate}px)`;
-        });
+        ticking = false;
     }
+    
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateScrollEffects);
+            ticking = true;
+        }
+    }
+    
+    window.addEventListener('scroll', requestTick, { passive: true });
 }
 
 // === GESTION DES FORMULAIRES ===
 
 // Initialisation de la gestion des formulaires
+/**
+ * Initialise la gestion des formulaires avec validation en temps réel
+ * Configure les événements de validation et de soumission
+ */
 function initializeFormHandling() {
     const contactForm = document.querySelector('.contact-form form');
     
@@ -268,6 +228,10 @@ function initializeFormHandling() {
 }
 
 // Gestion de la soumission du formulaire
+/**
+ * Gère la soumission des formulaires avec validation et feedback
+ * @param {Event} e - L'événement de soumission du formulaire
+ */
 function handleFormSubmit(e) {
     e.preventDefault();
     
@@ -304,6 +268,10 @@ function handleFormSubmit(e) {
 }
 
 // Validation d'un champ
+/**
+ * Valide un champ de saisie en temps réel
+ * @param {Event} e - L'événement de saisie (input/blur)
+ */
 function validateInput(e) {
     const input = e.target;
     const value = input.value.trim();
@@ -345,6 +313,11 @@ function validateInput(e) {
 }
 
 // Afficher une erreur sur un champ
+/**
+ * Affiche un message d'erreur pour un champ de saisie
+ * @param {HTMLElement} input - Le champ de saisie
+ * @param {string} message - Le message d'erreur à afficher
+ */
 function showInputError(input, message) {
     input.style.borderColor = '#ef4444';
     
@@ -373,6 +346,11 @@ function clearValidationError(e) {
 }
 
 // Validation complète du formulaire
+/**
+ * Valide l'ensemble d'un formulaire
+ * @param {HTMLFormElement} form - Le formulaire à valider
+ * @returns {boolean} True si le formulaire est valide, false sinon
+ */
 function validateForm(form) {
     const inputs = form.querySelectorAll('input[required]');
     let isValid = true;
@@ -409,210 +387,35 @@ function initializeCTAOptimization() {
         });
     });
     
-    // Sticky CTA mobile optimisé
-    initializeStickyCTA();
-    
     // Urgence dynamique
-    updateUrgencyMessages();
-    
-    // Gestion du clic sur le CTA minimisé
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.btn-sticky.minimized')) {
-            expandStickyCTA();
-        }
-    });
+    // updateUrgencyMessages(); // Désactivé pour garder le texte fixe
 }
 
-// CTA sticky mobile optimisé
-function initializeStickyCTA() {
-    const stickyCTA = document.querySelector('.sticky-cta');
-    if (!stickyCTA) return;
-    
-    let isVisible = false;
-    let isMinimized = false;
-    let lastScrollY = window.scrollY;
-    let scrollDirection = 'up';
-    
-    // Gestion du scroll avec direction
-    window.addEventListener('scroll', () => {
-        const currentScrollY = window.scrollY;
-        scrollDirection = currentScrollY > lastScrollY ? 'down' : 'up';
-        lastScrollY = currentScrollY;
-        
-        const heroSection = document.querySelector('.hero');
-        const footer = document.querySelector('.footer');
-        const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-        const footerTop = footer.offsetTop;
-        const scrollPosition = window.scrollY + window.innerHeight;
-        
-        // Afficher après la section hero mais cacher avant le footer
-        const shouldShow = scrollPosition > heroBottom && window.scrollY + window.innerHeight < footerTop - 100;
-        
-        if (shouldShow && !isVisible) {
-            stickyCTA.style.display = 'block';
-            stickyCTA.classList.remove('hidden');
-            isVisible = true;
-        } else if (!shouldShow && isVisible) {
-            stickyCTA.classList.add('hidden');
-            setTimeout(() => {
-                if (stickyCTA.classList.contains('hidden')) {
-                    stickyCTA.style.display = 'none';
-                }
-            }, 400);
-            isVisible = false;
-        }
-        
-        // Effet de masquage intelligent selon la direction du scroll
-        if (isVisible && !isMinimized) {
-            if (scrollDirection === 'down' && currentScrollY > heroBottom + 200) {
-                stickyCTA.style.opacity = '0.7';
-                stickyCTA.style.transform = 'translateY(10px) scale(0.95)';
-            } else if (scrollDirection === 'up') {
-                stickyCTA.style.opacity = '1';
-                stickyCTA.style.transform = 'translateY(0) scale(1)';
-            }
-        }
-    });
-    
-    // Auto-minimisation après inactivité
-    let inactivityTimer;
-    const resetInactivityTimer = () => {
-        clearTimeout(inactivityTimer);
-        inactivityTimer = setTimeout(() => {
-            if (isVisible && !isMinimized) {
-                minimizeStickyCTA();
-            }
-        }, 8000); // 8 secondes d'inactivité
-    };
-    
-    // Reset timer sur interaction
-    document.addEventListener('mousemove', resetInactivityTimer);
-    document.addEventListener('scroll', resetInactivityTimer);
-    document.addEventListener('touchstart', resetInactivityTimer);
-    
-    resetInactivityTimer();
-}
 
-// Fonction pour basculer l'état du CTA sticky
-function toggleStickyCTA() {
-    const stickyCTA = document.querySelector('.sticky-cta');
-    const btnSticky = document.querySelector('.btn-sticky');
-    
-    if (stickyCTA.classList.contains('minimized')) {
-        expandStickyCTA();
-    } else {
-        minimizeStickyCTA();
-    }
-}
 
-// Fonction pour minimiser le CTA
-function minimizeStickyCTA() {
-    const stickyCTA = document.querySelector('.sticky-cta');
-    const btnSticky = document.querySelector('.btn-sticky');
-    
-    stickyCTA.classList.add('minimized');
-    btnSticky.classList.add('minimized');
-}
-
-// Fonction pour agrandir le CTA
-function expandStickyCTA() {
-    const stickyCTA = document.querySelector('.sticky-cta');
-    const btnSticky = document.querySelector('.btn-sticky');
-    
-    stickyCTA.classList.remove('minimized');
-    btnSticky.classList.remove('minimized');
-    
-    // Auto-minimiser après 5 secondes
-    setTimeout(() => {
-        if (!stickyCTA.classList.contains('minimized')) {
-            minimizeStickyCTA();
-        }
-    }, 5000);
-}
-
-// Messages d'urgence dynamiques
-function updateUrgencyMessages() {
-    const urgencyElements = document.querySelectorAll('.cta-urgency');
-    
-    urgencyElements.forEach(element => {
-        // Calcul des places restantes (simulation)
-        const placesLeft = Math.floor(Math.random() * 5) + 1;
-        element.textContent = `⚡ Plus que ${placesLeft} places disponibles cette semaine`;
-        
-        // Animation clignotante subtile
-        setInterval(() => {
-            element.style.opacity = '0.7';
-            setTimeout(() => {
-                element.style.opacity = '1';
-            }, 500);
-        }, 3000);
-    });
-}
+// Messages d'urgence dynamiques - DÉSACTIVÉ pour garder le texte fixe
+// function updateUrgencyMessages() {
+//     const urgencyElements = document.querySelectorAll('.cta-urgency');
+//     
+//     urgencyElements.forEach(element => {
+//         // Calcul des places restantes (simulation)
+//         const placesLeft = Math.floor(Math.random() * 5) + 1;
+//         element.textContent = `⚠️ Nombre d'accompagnements volontairement limité pour garantir un suivi de qualité`;
+//         
+//         // Animation clignotante subtile
+//         setInterval(() => {
+//             element.style.opacity = '0.7';
+//             setTimeout(() => {
+//                 element.style.opacity = '1';
+//             }, 500);
+//         }, 3000);
+//     });
+// }
 
 // === NAVIGATION ===
 
 // Initialisation de la navigation
 function initializeNavigation() {
-    // Gestion du menu hamburger mobile
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const body = document.body;
-    
-    if (navToggle && navMenu) {
-        // Toggle du menu mobile
-        navToggle.addEventListener('click', function() {
-            const isActive = navMenu.classList.contains('active');
-            
-            if (isActive) {
-                closeMenu();
-            } else {
-                openMenu();
-            }
-        });
-        
-        // Fermer le menu en cliquant sur un lien
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    closeMenu();
-                }
-            });
-        });
-        
-        // Fermer le menu en cliquant à l'extérieur
-        document.addEventListener('click', function(e) {
-            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-                closeMenu();
-            }
-        });
-        
-        // Fermer le menu avec la touche Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeMenu();
-            }
-        });
-        
-        // Gérer le redimensionnement de la fenêtre
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                closeMenu();
-            }
-        });
-    }
-    
-    function openMenu() {
-        navMenu.classList.add('active');
-        navToggle.classList.add('active');
-        body.style.overflow = 'hidden'; // Empêcher le scroll
-    }
-    
-    function closeMenu() {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
-        body.style.overflow = ''; // Restaurer le scroll
-    }
     
     // Scroll fluide vers les sections (seulement pour les liens internes)
     const internalLinks = document.querySelectorAll('a[href^="#"]');
@@ -639,6 +442,10 @@ function initializeNavigation() {
 // === COMPTEURS ANIMÉS ===
 
 // Initialisation des compteurs
+/**
+ * Initialise les compteurs animés avec IntersectionObserver
+ * Déclenche l'animation des chiffres au scroll
+ */
 function initializeCounters() {
     const counters = document.querySelectorAll('.stat-number');
     
@@ -657,6 +464,10 @@ function initializeCounters() {
 }
 
 // Animation d'un compteur
+/**
+ * Anime un compteur numérique de 0 à sa valeur finale
+ * @param {HTMLElement} element - L'élément contenant le nombre à animer
+ */
 function animateCounter(element) {
     const target = parseInt(element.textContent);
     const duration = CONFIG.counterSpeed;
@@ -730,128 +541,93 @@ function trackConversion(eventName, eventData = {}) {
         fbq('track', 'Lead', eventData);
     }
     
-    // Console pour debug
-    console.log('Conversion tracked:', eventName, eventData);
+    // Conversion trackée silencieusement
 }
 
 // === ANIMATIONS CSS DYNAMIQUES ===
 
 // Ajout des animations CSS
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-    
-    @keyframes slideUp {
-        from {
-            transform: translateY(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateY(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideDown {
-        from {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateY(100%);
-            opacity: 0;
-        }
-    }
-    
-    .notification {
-        font-family: 'Lato', sans-serif;
-    }
-    
-    /* Améliorations des interactions */
-    .btn-primary:active,
-    .btn-hero:active,
-    .btn-cta-main:active {
-        transform: scale(0.95) !important;
-    }
-    
-    /* Curseur personnalisé sur les CTA */
-    .btn-primary,
-    .btn-hero,
-    .btn-cta-main {
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .btn-primary::before,
-    .btn-hero::before,
-    .btn-cta-main::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: width 0.3s ease, height 0.3s ease;
-    }
-    
-    .btn-primary:hover::before,
-    .btn-hero:hover::before,
-    .btn-cta-main:hover::before {
-        width: 300px;
-        height: 300px;
-    }
-`;
+// CSS dynamique déplacé vers styles.css pour une meilleure séparation des préoccupations
 
-document.head.appendChild(style);
+
 
 // === OPTIMISATIONS PERFORMANCE ===
 
-// Lazy loading des images (si nécessaire)
+// Optimisations de performance avancées
+// Lazy loading des images avec fallback
 function initializeLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.removeAttribute('data-src');
-                imageObserver.unobserve(img);
-            }
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    img.classList.add('loaded');
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.01
         });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    } else {
+        // Fallback pour les navigateurs plus anciens
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            img.classList.add('loaded');
+            img.removeAttribute('data-src');
+        });
+    }
 }
 
+// Optimisation des performances critiques
+/**
+ * Optimisations de performance simplifiées
+ * Évite les conflits potentiels avec d'autres scripts
+ */
+function optimizePerformance() {
+    // Respect des préférences d'accessibilité pour les animations
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+        document.documentElement.style.setProperty('--animation-duration', '0.01s');
+    }
+    
+    // Préchargement des ressources critiques
+    const criticalResources = ['booking.html'];
+    criticalResources.forEach(resource => {
+        const link = document.createElement('link');
+        link.rel = 'prefetch';
+        link.href = resource;
+        document.head.appendChild(link);
+    });
+    
+    // Nettoyage des observers pour éviter les fuites mémoire
+    window.addEventListener('beforeunload', () => {
+        // Nettoyer tous les observers IntersectionObserver
+        document.querySelectorAll('[data-observer]').forEach(el => {
+            const observer = el.observerInstance;
+            if (observer) observer.disconnect();
+        });
+    });
+}
 
+// Initialisation optimisée
+function initOptimizations() {
+    initializeLazyLoading();
+    optimizePerformance();
+}
 
 // Initialisation des optimisations
-initializeLazyLoading();
+initOptimizations();
+
+
 
 // === ACCESSIBILITÉ ===
 
@@ -884,29 +660,57 @@ enhanceAccessibility();
 
 // Fonction pour télécharger le livre blanc
 function downloadWhitePaper() {
-    // Créer un lien de téléchargement vers le vrai fichier PDF
-    const link = document.createElement('a');
-    link.href = 'Ebook Gratuit - Les bases de l\'immobilier.pdf';
-    link.download = 'Ebook Gratuit - Les bases de l\'immobilier.pdf';
-    
-    // Déclencher le téléchargement
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    // Afficher une notification de succès
-    showNotification('📥 Livre blanc téléchargé avec succès !', 'success');
-    
-    // Tracker la conversion
-    trackConversion('white_paper_download', {
-        content_name: 'Les 7 erreurs à éviter pour réussir son premier investissement locatif',
-        content_category: 'lead_magnet'
-    });
-    
-    // Optionnel : rediriger vers une page de remerciement après un délai
-    setTimeout(() => {
-        // window.location.href = '#contact'; // Redirection vers la section contact
-    }, 2000);
+    try {
+        const pdfUrl = 'Ebook Gratuit - Les bases de l\'immobilier.pdf';
+        
+        // Vérifier si on est sur mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // Sur mobile, ouvrir dans un nouvel onglet pour éviter les blocages
+            const newWindow = window.open(pdfUrl, '_blank');
+            if (!newWindow) {
+                // Si le popup est bloqué, essayer la méthode classique
+                window.location.href = pdfUrl;
+            }
+        } else {
+            // Sur desktop, utiliser la méthode de téléchargement classique
+            const link = document.createElement('a');
+            link.href = pdfUrl;
+            link.download = 'Ebook Gratuit - Les bases de l\'immobilier.pdf';
+            link.style.display = 'none';
+            
+            // Ajouter au DOM, cliquer, puis supprimer
+            document.body.appendChild(link);
+            link.click();
+            
+            // Supprimer après un court délai pour s'assurer que le téléchargement a commencé
+            setTimeout(() => {
+                document.body.removeChild(link);
+            }, 100);
+        }
+        
+        // Afficher une notification de succès
+        showNotification('📥 Livre blanc téléchargé avec succès !', 'success');
+        
+        // Tracker la conversion
+        trackConversion('white_paper_download', {
+            content_name: 'Les 7 erreurs à éviter pour réussir son premier investissement locatif',
+            content_category: 'lead_magnet',
+            device_type: isMobile ? 'mobile' : 'desktop'
+        });
+        
+    } catch (error) {
+        // Erreur lors du téléchargement
+        showNotification('❌ Erreur lors du téléchargement. Veuillez réessayer.', 'error');
+        
+        // En cas d'erreur, essayer d'ouvrir le PDF dans un nouvel onglet
+        try {
+            window.open('Ebook Gratuit - Les bases de l\'immobilier.pdf', '_blank');
+        } catch (fallbackError) {
+            // Erreur de fallback
+        }
+    }
 }
 
 // === GESTION DES ERREURS ===

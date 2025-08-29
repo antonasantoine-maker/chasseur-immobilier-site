@@ -9,6 +9,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-400073659"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'AW-400073659');
+    </script>
+    
     <style>
         .error-404 {
             min-height: 100vh;
@@ -125,8 +136,11 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">Mon Chasseur de Pierre</span>
-                <span class="logo-subtitle">Chasseur Immobilier</span>
+                <img src="image/test-logo-optimized.webp" alt="Logo Mon Chasseur de Pierre" class="logo-image">
+                <div class="logo-text-container">
+                    <span class="logo-text">Mon Chasseur de Pierre</span>
+                    <span class="logo-subtitle">Chasseur Immobilier</span>
+                </div>
             </div>
             <div class="nav-cta">
                 <a href="index.html" class="btn-primary">Retour à l'accueil</a>
@@ -155,9 +169,9 @@
     </section>
 
     <script>
-        // Redirection automatique après 10 secondes
+        // Redirection automatique après 10 secondes (optimisée)
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = '/';
         }, 10000);
     </script>
 </body>

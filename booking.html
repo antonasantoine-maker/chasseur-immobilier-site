@@ -11,16 +11,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cookie-consent.css">
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-400073659"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'AW-400073659');
+    </script>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">Mon Chasseur de Pierre</span>
-                <span class="logo-subtitle">Chasseur Immobilier</span>
+                <img src="image/test-logo-optimized.webp" alt="Logo Mon Chasseur de Pierre" class="logo-image">
+                <div class="logo-text-container">
+                    <span class="logo-text">Mon Chasseur de Pierre</span>
+                    <span class="logo-subtitle">Chasseur Immobilier</span>
+                </div>
             </div>
             <div class="nav-menu">
                 <ul class="nav-links">
@@ -32,7 +45,7 @@
                 </ul>
             </div>
             <div class="nav-cta">
-                <a href="#contact" class="btn-primary">Réserver mon appel gratuit</a>
+                <a href="#contact" class="btn-primary">Je veux échanger sur mon projet</a>
             </div>
             <div class="nav-toggle">
                 <span></span>
@@ -40,6 +53,7 @@
                 <span></span>
             </div>
         </div>
+        <div class="nav-overlay"></div>
     </nav>
 
     <!-- Booking Form Section -->
@@ -51,192 +65,226 @@
                     <p style="text-align: center; margin-bottom: 3rem; color: var(--text-color); font-size: 1.1rem;">30 minutes avec un chasseur immobilier expert pour analyser votre projet d'investissement</p>
                     
                     <form id="bookingForm" action="#" method="POST">
-                        <!-- Informations de base -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">
-                                👤 Vos informations
-                            </h3>
-                            <div class="form-group">
-                                <label class="form-label" for="firstName">Prénom *</label>
-                                <input type="text" id="firstName" name="firstName" required>
+                        <!-- Étape 1: Informations essentielles -->
+                        <div id="step1" class="form-step active">
+                            <div class="step-header">
+                                <div class="step-indicator">
+                                    <span class="step-number active">1</span>
+                                    <span class="step-number">2</span>
+                                </div>
+                                <h3 class="step-title">Réservez votre appel gratuit</h3>
+                                <p class="step-subtitle">30 secondes pour réserver votre créneau</p>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label" for="lastName">Nom *</label>
-                                <input type="text" id="lastName" name="lastName" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="email">Email *</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="phone">Téléphone *</label>
-                                <input type="tel" id="phone" name="phone" required>
-                            </div>
-                        </div>
-
-                        <!-- Projet immobilier -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">
-                                🏠 Votre projet immobilier
-                            </h3>
-                            <div class="form-group">
-                                <label class="form-label" for="propertyType">Type de bien recherché *</label>
-                                <select id="propertyType" name="propertyType" required>
-                                    <option value="">Sélectionnez un type</option>
-                                    <option value="appartement">Appartement</option>
-                                    <option value="maison">Maison individuelle</option>
-                                    <option value="immeuble">Immeuble de rapport</option>
-                                    <option value="commercial">Local commercial</option>
-                                    <option value="terrain">Terrain à bâtir</option>
-                                    <option value="autre">Autre</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="location">Secteur géographique *</label>
-                                <input type="text" id="location" name="location" placeholder="Ville, département ou région" required>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="budget">Budget d'investissement *</label>
-                                <select id="budget" name="budget" required>
-                                    <option value="">Sélectionnez votre budget</option>
-                                    <option value="50-100k">50 000 - 100 000 €</option>
-                                    <option value="100-200k">100 000 - 200 000 €</option>
-                                    <option value="200-300k">200 000 - 300 000 €</option>
-                                    <option value="300-500k">300 000 - 500 000 €</option>
-                                    <option value="500k+">Plus de 500 000 €</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Objectifs d'investissement (plusieurs choix possibles) :</label>
-                                <div class="checkbox-group">
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="goals[]" value="revenus-complementaires">
-                                        <span>Revenus complémentaires</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="goals[]" value="preparation-retraite">
-                                        <span>Préparation retraite</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="goals[]" value="defiscalisation">
-                                        <span>Défiscalisation</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="goals[]" value="patrimoine-familial">
-                                        <span>Constitution patrimoine</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="goals[]" value="plus-value">
-                                        <span>Recherche plus-value</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="goals[]" value="residence-principale">
-                                        <span>Future résidence principale</span>
-                                    </label>
+                            
+                            <div class="form-section">
+                                <div class="form-group">
+                                    <label class="form-label" for="firstName">Prénom *</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="email">Email *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="phone">Téléphone *</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="timeSlot">Créneau préféré *</label>
+                                    <select id="timeSlot" name="timeSlot" required>
+                                        <option value="">Sélectionnez un créneau</option>
+                                        <option value="matin-semaine">Matin en semaine (9h-12h)</option>
+                                        <option value="apres-midi-semaine">Après-midi en semaine (14h-18h)</option>
+                                        <option value="soir-semaine">Soir en semaine (18h-20h)</option>
+                                        <option value="samedi-matin">Samedi matin (9h-12h)</option>
+                                        <option value="samedi-apres-midi">Samedi après-midi (14h-17h)</option>
+                                    </select>
                                 </div>
                             </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" id="continueBtn" class="btn-primary btn-large">
+                                    🗓️ Je veux échanger sur mon projet
+                                </button>
+                                <button type="button" id="skipToStep2" class="btn-link">
+                                    Ajouter des détails sur mon projet (optionnel)
+                                </button>
+                            </div>
+                            
+                            <div class="form-trust">
+                                <p class="trust-text">🔒 Sans engagement • Réponse sous 24h • Appel 100% gratuit</p>
+                            </div>
                         </div>
 
-                        <!-- Expérience -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">
-                                📊 Votre expérience
-                            </h3>
-                            <div class="form-group">
-                                <label class="form-label">Avez-vous déjà investi dans l'immobilier ? *</label>
-                                <div class="radio-group">
-                                    <label class="radio-item">
-                                        <input type="radio" name="experience" value="oui" required>
-                                        <span>Oui</span>
-                                    </label>
-                                    <label class="radio-item">
-                                        <input type="radio" name="experience" value="non" required>
-                                        <span>Non, c'est mon premier investissement</span>
-                                    </label>
+                        <!-- Étape 2: Détails du projet (optionnel) -->
+                        <div id="step2" class="form-step">
+                            <div class="step-header">
+                                <div class="step-indicator">
+                                    <span class="step-number completed">1</span>
+                                    <span class="step-number active">2</span>
+                                </div>
+                                <h3 class="step-title">Parlez-nous de votre projet</h3>
+                                <p class="step-subtitle">Ces informations nous aident à mieux préparer notre échange (optionnel)</p>
+                            </div>
+                            
+                            <!-- Projet immobilier -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    🏠 Votre projet immobilier
+                                </h3>
+                                <div class="form-group">
+                                    <label class="form-label" for="propertyType">Type de bien recherché</label>
+                                    <select id="propertyType" name="propertyType">
+                                        <option value="">Sélectionnez un type</option>
+                                        <option value="appartement">Appartement</option>
+                                        <option value="maison">Maison individuelle</option>
+                                        <option value="immeuble">Immeuble de rapport</option>
+                                        <option value="commercial">Local commercial</option>
+                                        <option value="terrain">Terrain à bâtir</option>
+                                        <option value="autre">Autre</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="location">Secteur géographique</label>
+                                    <input type="text" id="location" name="location" placeholder="Ville, département ou région">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="budget">Budget d'investissement</label>
+                                    <select id="budget" name="budget">
+                                        <option value="">Sélectionnez votre budget</option>
+                                        <option value="50-100k">50 000 - 100 000 €</option>
+                                        <option value="100-200k">100 000 - 200 000 €</option>
+                                        <option value="200-300k">200 000 - 300 000 €</option>
+                                        <option value="300-500k">300 000 - 500 000 €</option>
+                                        <option value="500k+">Plus de 500 000 €</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Objectifs d'investissement (plusieurs choix possibles) :</label>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="goals[]" value="revenus-complementaires">
+                                            <span>Revenus complémentaires</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="goals[]" value="preparation-retraite">
+                                            <span>Préparation retraite</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="goals[]" value="defiscalisation">
+                                            <span>Défiscalisation</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="goals[]" value="patrimoine-familial">
+                                            <span>Constitution patrimoine</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="goals[]" value="plus-value">
+                                            <span>Recherche plus-value</span>
+                                        </label>
+                                        <label class="checkbox-item">
+                                            <input type="checkbox" name="goals[]" value="residence-principale">
+                                            <span>Future résidence principale</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group" id="experienceDetails" style="display: none;">
-                                <label class="form-label" for="experienceDescription">Décrivez brièvement vos investissements précédents</label>
-                                <textarea id="experienceDescription" name="experienceDescription" placeholder="Nombre de biens, types, secteurs géographiques..."></textarea>
-                            </div>
-                        </div>
 
-                        <!-- Priorités et blocages -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">
-                                🎯 Vos priorités
-                            </h3>
-                            <div class="form-group">
-                                <label class="form-label" for="mainObjective">Quel est votre objectif principal ? *</label>
-                                <select id="mainObjective" name="mainObjective" required>
-                                    <option value="">Sélectionnez votre priorité</option>
-                                    <option value="rentabilite">Maximiser la rentabilité</option>
-                                    <option value="securite">Sécuriser l'investissement</option>
-                                    <option value="fiscalite">Optimiser la fiscalité</option>
-                                    <option value="patrimoine">Développer le patrimoine</option>
-                                    <option value="revenus">Générer des revenus réguliers</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="blockers">Quels sont vos principaux blocages actuels ?</label>
-                                <textarea id="blockers" name="blockers" placeholder="Manque de temps, difficulté à trouver des biens, questions sur le financement..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" for="expectations">Qu'attendez-vous de cet échange ?</label>
-                                <textarea id="expectations" name="expectations" placeholder="Conseils personnalisés, analyse de marché, stratégie d'investissement..."></textarea>
-                            </div>
-                        </div>
-
-                        <!-- Disponibilités -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">
-                                📅 Vos disponibilités
-                            </h3>
-                            <div class="form-group">
-                                <label class="form-label" for="timeSlot">Créneau préféré pour l'appel *</label>
-                                <select id="timeSlot" name="timeSlot" required>
-                                    <option value="">Sélectionnez un créneau</option>
-                                    <option value="matin-semaine">Matin en semaine (9h-12h)</option>
-                                    <option value="apres-midi-semaine">Après-midi en semaine (14h-18h)</option>
-                                    <option value="soir-semaine">Soir en semaine (18h-20h)</option>
-                                    <option value="samedi-matin">Samedi matin (9h-12h)</option>
-                                    <option value="samedi-apres-midi">Samedi après-midi (14h-17h)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Mode de contact préféré *</label>
-                                <div class="radio-group">
-                                    <label class="radio-item">
-                                        <input type="radio" name="contactMethod" value="telephone" required>
-                                        <span>📞 Téléphone</span>
-                                    </label>
-                                    <label class="radio-item">
-                                        <input type="radio" name="contactMethod" value="visio" required>
-                                        <span>💻 Visioconférence</span>
-                                    </label>
+                            <!-- Expérience -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    📊 Votre expérience
+                                </h3>
+                                <div class="form-group">
+                                    <label class="form-label">Avez-vous déjà investi dans l'immobilier ?</label>
+                                    <div class="radio-group">
+                                        <label class="radio-item">
+                                            <input type="radio" name="experience" value="oui">
+                                            <span>Oui</span>
+                                        </label>
+                                        <label class="radio-item">
+                                            <input type="radio" name="experience" value="non">
+                                            <span>Non, c'est mon premier investissement</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="experienceDetails" style="display: none;">
+                                    <label class="form-label" for="experienceDescription">Décrivez brièvement vos investissements précédents</label>
+                                    <textarea id="experienceDescription" name="experienceDescription" placeholder="Nombre de biens, types, secteurs géographiques..."></textarea>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Commentaires -->
-                        <div class="form-section">
-                            <h3 class="form-section-title">
-                                💬 Informations complémentaires
-                            </h3>
-                            <div class="form-group">
-                                <label class="form-label" for="comments">Avez-vous des questions spécifiques ?</label>
-                                <textarea id="comments" name="comments" placeholder="Questions particulières, contraintes spécifiques, informations importantes..."></textarea>
-                                <div class="form-help">Ce champ est optionnel mais nous aide à mieux préparer notre échange</div>
+                            <!-- Priorités et blocages -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    🎯 Vos priorités
+                                </h3>
+                                <div class="form-group">
+                                    <label class="form-label" for="mainObjective">Quel est votre objectif principal ?</label>
+                                    <select id="mainObjective" name="mainObjective">
+                                        <option value="">Sélectionnez votre priorité</option>
+                                        <option value="rentabilite">Maximiser la rentabilité</option>
+                                        <option value="securite">Sécuriser l'investissement</option>
+                                        <option value="fiscalite">Optimiser la fiscalité</option>
+                                        <option value="patrimoine">Développer le patrimoine</option>
+                                        <option value="revenus">Générer des revenus réguliers</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="blockers">Quels sont vos principaux blocages actuels ?</label>
+                                    <textarea id="blockers" name="blockers" placeholder="Manque de temps, difficulté à trouver des biens, questions sur le financement..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="expectations">Qu'attendez-vous de cet échange ?</label>
+                                    <textarea id="expectations" name="expectations" placeholder="Conseils personnalisés, analyse de marché, stratégie d'investissement..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Mode de contact -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    📞 Mode de contact
+                                </h3>
+                                <div class="form-group">
+                                    <label class="form-label">Mode de contact préféré</label>
+                                    <div class="radio-group">
+                                        <label class="radio-item">
+                                            <input type="radio" name="contactMethod" value="telephone">
+                                            <span>📞 Téléphone</span>
+                                        </label>
+                                        <label class="radio-item">
+                                            <input type="radio" name="contactMethod" value="visio">
+                                            <span>💻 Visioconférence</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Commentaires -->
+                            <div class="form-section">
+                                <h3 class="form-section-title">
+                                    💬 Informations complémentaires
+                                </h3>
+                                <div class="form-group">
+                                    <label class="form-label" for="comments">Avez-vous des questions spécifiques ?</label>
+                                    <textarea id="comments" name="comments" placeholder="Questions particulières, contraintes spécifiques, informations importantes..."></textarea>
+                                    <div class="form-help">Ce champ est optionnel mais nous aide à mieux préparer notre échange</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" id="backToStep1" class="btn-secondary">
+                                    ← Retour
+                                </button>
+                                <button type="submit" class="btn-primary btn-large">
+                                    🗓️ Finaliser ma réservation
+                                </button>
                             </div>
                         </div>
-
-                        <button type="submit" class="btn-submit">
-                            <span class="btn-text">🗓️ Réservez mon appel gratuit</span>
-                            <span class="btn-subtext">Réponse sous 24h maximum</span>
-                        </button>
                         
+                        <!-- Confirmation de soumission -->
                         <div class="form-trust">
-                            <p class="trust-text">🔒 Sans engagement, juste des conseils personnalisés pour votre projet.</p>
+                            <p class="trust-text">🔒 Sans engagement • Réponse sous 24h • Appel 100% gratuit</p>
                         </div>
                     </form>
                 </div>
@@ -266,10 +314,80 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2024011501"></script>
+    <script src="cookie-consent.js"></script>
     <script>
-        // Gestion de l'affichage conditionnel des détails d'expérience
+        // Gestion du formulaire en 2 étapes
         document.addEventListener('DOMContentLoaded', function() {
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const continueBtn = document.getElementById('continueBtn');
+            const skipToStep2 = document.getElementById('skipToStep2');
+            const backToStep1 = document.getElementById('backToStep1');
+            const form = document.getElementById('bookingForm');
+            
+            // Navigation entre les étapes
+            continueBtn.addEventListener('click', function() {
+                if (validateStep1()) {
+                    // Soumettre directement si étape 1 valide
+                    submitForm();
+                }
+            });
+            
+            skipToStep2.addEventListener('click', function() {
+                if (validateStep1()) {
+                    showStep2();
+                }
+            });
+            
+            backToStep1.addEventListener('click', function() {
+                showStep1();
+            });
+            
+            // Soumission du formulaire
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitForm();
+            });
+            
+            function validateStep1() {
+                const firstName = document.getElementById('firstName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const timeSlot = document.getElementById('timeSlot').value;
+                
+                if (!firstName || !email || !phone || !timeSlot) {
+                    alert('Veuillez remplir tous les champs obligatoires.');
+                    return false;
+                }
+                
+                // Validation email basique
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Veuillez saisir une adresse email valide.');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            function showStep1() {
+                step1.classList.add('active');
+                step2.classList.remove('active');
+            }
+            
+            function showStep2() {
+                step1.classList.remove('active');
+                step2.classList.add('active');
+            }
+            
+            function submitForm() {
+                // Ici vous pouvez ajouter la logique de soumission
+                alert('Merci ! Votre demande a été envoyée. Nous vous recontacterons sous 24h.');
+                // Redirection ou autre action après soumission
+            }
+            
+            // Gestion de l'affichage conditionnel des détails d'expérience
             const experienceRadios = document.querySelectorAll('input[name="experience"]');
             const experienceDetails = document.getElementById('experienceDetails');
             

@@ -1,0 +1,54 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f3e5f5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e1bee7;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="skin2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffcc9a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffb74d;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="60" fill="url(#bg2)"/>
+  
+  <!-- Face -->
+  <ellipse cx="60" cy="55" rx="26" ry="32" fill="url(#skin2)"/>
+  
+  <!-- Hair -->
+  <path d="M35 35 Q60 20 85 35 Q85 40 80 45 Q70 40 60 42 Q50 40 40 45 Q35 40 35 35" fill="#3e2723"/>
+  
+  <!-- Beard -->
+  <path d="M45 70 Q60 75 75 70 Q75 80 60 82 Q45 80 45 70" fill="#3e2723"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="52" cy="50" rx="3" ry="4" fill="#4caf50"/>
+  <ellipse cx="68" cy="50" rx="3" ry="4" fill="#4caf50"/>
+  <ellipse cx="52" cy="50" rx="1.5" ry="2" fill="#2e7d32"/>
+  <ellipse cx="68" cy="50" rx="1.5" ry="2" fill="#2e7d32"/>
+  
+  <!-- Eyebrows -->
+  <path d="M48 44 Q52 42 56 44" stroke="#2e2e2e" stroke-width="2.5" fill="none"/>
+  <path d="M64 44 Q68 42 72 44" stroke="#2e2e2e" stroke-width="2.5" fill="none"/>
+  
+  <!-- Nose -->
+  <ellipse cx="60" cy="58" rx="2.5" ry="3.5" fill="#ff9800" opacity="0.6"/>
+  
+  <!-- Mouth -->
+  <path d="M55 65 Q60 68 65 65" stroke="#d84315" stroke-width="2" fill="none"/>
+  
+  <!-- Glasses -->
+  <circle cx="52" cy="50" r="8" fill="none" stroke="#424242" stroke-width="2"/>
+  <circle cx="68" cy="50" r="8" fill="none" stroke="#424242" stroke-width="2"/>
+  <path d="M60 50 L60 50" stroke="#424242" stroke-width="2"/>
+  
+  <!-- Clothing - suit -->
+  <path d="M35 85 Q60 80 85 85 L85 120 L35 120 Z" fill="#37474f"/>
+  
+  <!-- Tie -->
+  <path d="M55 85 Q60 82 65 85 L62 110 L58 110 Z" fill="#1976d2"/>
+  
+  <!-- Shirt collar -->
+  <path d="M45 85 Q60 82 75 85 Q70 88 60 88 Q50 88 45 85" fill="#ffffff"/>
+</svg>

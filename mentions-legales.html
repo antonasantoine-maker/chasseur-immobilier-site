@@ -9,14 +9,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cookie-consent.css">
+    
+    <!-- Google tag (gtag.js) avec gestion du consentement -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-400073659"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      // Configuration du consentement par défaut (refusé)
+      gtag('consent', 'default', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'functionality_storage': 'denied',
+        'personalization_storage': 'denied'
+      });
+    
+      gtag('config', 'AW-400073659');
+    </script>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">Mon Chasseur de Pierre</span>
-                <span class="logo-subtitle">Chasseur Immobilier</span>
+                <img src="image/test-logo-optimized.webp" alt="Logo Mon Chasseur de Pierre" class="logo-image">
+                <div class="logo-text-container">
+                    <span class="logo-text">Mon Chasseur de Pierre</span>
+                    <span class="logo-subtitle">Chasseur Immobilier</span>
+                </div>
             </div>
             <div class="nav-cta">
                 <a href="index.html" class="btn-primary">Retour à l'accueil</a>
@@ -77,6 +99,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2024011501"></script>
+    <script src="cookie-consent.js"></script>
 </body>
 </html>

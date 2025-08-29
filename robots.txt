@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 
+# Allow Google Ads bot
+User-agent: AdsBot-Google
+Allow: /
+
 # Sitemap
 Sitemap: https://monchasseurdepierre.netlify.app/sitemap.xml
 
@@ -10,6 +14,8 @@ Disallow: /.netlify/
 
 # Allow important pages
 Allow: /index.html
+Allow: /booking.html
+Allow: /faq.html
 Allow: /mentions-legales.html
 Allow: /politique-confidentialite.html
 Allow: /cgv.html

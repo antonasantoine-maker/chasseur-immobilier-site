@@ -1,0 +1,63 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff3e0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffcc80;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="skin3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffe0b2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffcc80;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="60" fill="url(#bg3)"/>
+  
+  <!-- Face -->
+  <ellipse cx="60" cy="55" rx="24" ry="29" fill="url(#skin3)"/>
+  
+  <!-- Hair - longer style -->
+  <path d="M30 35 Q60 15 90 35 Q90 50 85 60 Q80 55 75 58 Q70 50 60 52 Q50 50 45 58 Q40 55 35 60 Q30 50 30 35" fill="#ff6f00"/>
+  
+  <!-- Hair strands -->
+  <path d="M35 45 Q40 40 45 45" stroke="#e65100" stroke-width="1.5" fill="none"/>
+  <path d="M75 45 Q80 40 85 45" stroke="#e65100" stroke-width="1.5" fill="none"/>
+  
+  <!-- Eyes -->
+  <ellipse cx="52" cy="50" rx="3" ry="4" fill="#795548"/>
+  <ellipse cx="68" cy="50" rx="3" ry="4" fill="#795548"/>
+  <ellipse cx="52" cy="50" rx="1.5" ry="2" fill="#5d4037"/>
+  <ellipse cx="68" cy="50" rx="1.5" ry="2" fill="#5d4037"/>
+  
+  <!-- Eyelashes -->
+  <path d="M49 47 L50 45" stroke="#3e2723" stroke-width="1" />
+  <path d="M52 46 L52 44" stroke="#3e2723" stroke-width="1" />
+  <path d="M55 47 L54 45" stroke="#3e2723" stroke-width="1" />
+  <path d="M65 47 L66 45" stroke="#3e2723" stroke-width="1" />
+  <path d="M68 46 L68 44" stroke="#3e2723" stroke-width="1" />
+  <path d="M71 47 L70 45" stroke="#3e2723" stroke-width="1" />
+  
+  <!-- Eyebrows -->
+  <path d="M48 45 Q52 43 56 45" stroke="#e65100" stroke-width="2" fill="none"/>
+  <path d="M64 45 Q68 43 72 45" stroke="#e65100" stroke-width="2" fill="none"/>
+  
+  <!-- Nose -->
+  <ellipse cx="60" cy="58" rx="2" ry="3" fill="#ffab40" opacity="0.6"/>
+  
+  <!-- Mouth with lipstick -->
+  <path d="M55 65 Q60 68 65 65" stroke="#c2185b" stroke-width="2.5" fill="none"/>
+  
+  <!-- Earrings -->
+  <ellipse cx="41" cy="58" rx="1.5" ry="3" fill="#e91e63"/>
+  <ellipse cx="79" cy="58" rx="1.5" ry="3" fill="#e91e63"/>
+  
+  <!-- Clothing - professional blouse -->
+  <path d="M35 85 Q60 80 85 85 L85 120 L35 120 Z" fill="#673ab7"/>
+  
+  <!-- Necklace -->
+  <ellipse cx="60" cy="78" rx="15" ry="3" fill="none" stroke="#ffd700" stroke-width="2"/>
+  <circle cx="60" cy="81" r="3" fill="#ffd700"/>
+  
+  <!-- Professional collar -->
+  <path d="M45 85 Q60 82 75 85 Q70 88 60 88 Q50 88 45 85" fill="#9c27b0"/>
+</svg>
